@@ -11,7 +11,9 @@ import org.apache.mahout.cf.taste.recommender.Recommender;
 import org.apache.mahout.cf.taste.similarity.UserSimilarity;
 
 import java.io.File;
+import java.net.URI;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * packageName:kr.co.clozet.mahout
@@ -27,7 +29,9 @@ import java.util.List;
 public class RecommenderIntro {
 
     public static void main(String[] args) throws Exception{
-        DataModel model = new FileDataModel(new File("intro.csv"));
+
+        final URI path = Objects.requireNonNull(RecommenderIntro.class.getResource("/intro.csv")).toURI();
+        DataModel model = new FileDataModel(new File(path));
 
         UserSimilarity similarity = new PearsonCorrelationSimilarity(model);
         UserNeighborhood neighborhood = new NearestNUserNeighborhood(2, similarity, model);
